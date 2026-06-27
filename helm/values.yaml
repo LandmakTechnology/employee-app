@@ -1,14 +1,14 @@
 # Backend configuration
 backend:
   image: 075120018043.dkr.ecr.us-east-1.amazonaws.com/employee-backend
-  tag: latest
+  tag: fee9ddd9
   replicas: 2
   port: 5000
 
 # Frontend configuration
 frontend:
   image: 075120018043.dkr.ecr.us-east-1.amazonaws.com/employee-frontend
-  tag: latest
+  tag: fee9ddd9
   replicas: 2
   port: 80
 
