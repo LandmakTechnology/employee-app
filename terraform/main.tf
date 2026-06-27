@@ -231,6 +231,7 @@ resource "aws_iam_policy" "cloudwatch_logs" {
     Statement = [{
       Effect = "Allow"
       Action = [
+        "logs:CreateLogGroup",
         "logs:CreateLogStream",
         "logs:PutLogEvents",
         "logs:DescribeLogGroups",
