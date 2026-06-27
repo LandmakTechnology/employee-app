@@ -23,6 +23,3 @@ db_name           = "employees"
 db_username       = "landmark_admin"
 db_password       = "ChangeMe123!"
 db_instance_class = "db.t3.small"
-
-# Domain
-domain_name = "employees-stg.landmark.dev"

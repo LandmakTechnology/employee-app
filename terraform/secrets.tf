@@ -44,18 +44,3 @@ resource "aws_iam_policy" "secrets_access" {
     ]
   })
 }
-
-# ACM certificate for the domain
-resource "aws_acm_certificate" "app" {
-  domain_name       = var.domain_name
-  validation_method = "DNS"
-
-  tags = {
-    Name        = "landmark-cert-${var.environment}"
-    Environment = var.environment
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}

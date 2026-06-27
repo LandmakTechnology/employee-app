@@ -22,11 +22,9 @@ externalSecrets:
   secretName: "landmark-cluster-dev/employee-app"
   refreshInterval: "1m"
 
-# Ingress with TLS
+# Ingress via ALB
 ingress:
   enabled: true
-  host: "employees.landmark.dev"
-  certificateArn: ""
   ingressClass: alb
 
 # S3 bucket

@@ -46,8 +46,3 @@ output "ecr_frontend_url" {
 output "secrets_manager_secret_arn" {
   value = aws_secretsmanager_secret.db_credentials.arn
 }
-
-# ACM outputs
-output "acm_certificate_arn" {
-  value = aws_acm_certificate.app.arn
-}

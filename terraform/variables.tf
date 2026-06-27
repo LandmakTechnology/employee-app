@@ -87,8 +87,3 @@ variable "db_instance_class" {
   default     = "db.t3.micro"
 }
 
-variable "domain_name" {
-  description = "Domain name for the application"
-  type        = string
-  default     = "employees.landmark.dev"
-}
