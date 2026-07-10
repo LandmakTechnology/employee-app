@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: backend
   namespace: {{ .Release.Namespace }}
+  labels:
+    app: backend
 spec:
   selector:
     app: backend
