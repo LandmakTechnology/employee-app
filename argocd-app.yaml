@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/LandmakTechnology/employee-app.git
-    targetRevision: HEAD
+    targetRevision: main
     path: helm
     helm:
       valueFiles:
