@@ -224,6 +224,7 @@ def get_stats():
         "total_employees": total,
         "departments": {dept: count for dept, count in departments},
         "latest_hire": latest.to_dict() if latest else None,
+        "version": "2.0.0",
     }
     logger.info(f"Stats requested: {total} employees across {len(departments)} departments")
     return jsonify(stats)
