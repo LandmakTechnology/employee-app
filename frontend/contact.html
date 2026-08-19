@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Landmark Technologies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; padding: 24px 40px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 40px rgba(102,126,234,0.3); }
+        .header .logo { display: flex; align-items: center; gap: 14px; }
+        .header .logo svg { width: 36px; height: 36px; }
+        .header .logo h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+        .header .env-badge { background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 24px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+
+        .navbar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; justify-content: center; gap: 8px; padding: 0 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .navbar a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.4px; padding: 14px 20px; transition: all 0.2s; border-bottom: 2px solid transparent; }
+        .navbar a:hover, .navbar a.active { color: #fff; border-bottom-color: #a78bfa; }
+
+        .page-content { flex: 1; max-width: 1100px; margin: 60px auto; padding: 0 30px; width: 100%; }
+
+        .page-hero { text-align: center; margin-bottom: 60px; }
+        .page-hero h2 { font-size: 42px; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px; }
+        .page-hero p { font-size: 18px; color: #555; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+        .contact-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 40px; margin-bottom: 60px; }
+
+        .info-cards { display: flex; flex-direction: column; gap: 20px; }
+        .info-card { background: #fff; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid rgba(102,126,234,0.1); display: flex; gap: 16px; align-items: flex-start; transition: transform 0.3s; }
+        .info-card:hover { transform: translateY(-4px); }
+        .info-card-icon { width: 44px; height: 44px; background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1)); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .info-card-icon svg { color: #667eea; }
+        .info-card h4 { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 6px; }
+        .info-card p { font-size: 13px; color: #666; line-height: 1.6; }
+
+        .contact-form-card { background: #fff; border-radius: 16px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid rgba(102,126,234,0.1); position: relative; overflow: hidden; }
+        .contact-form-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #667eea, #764ba2); }
+        .contact-form-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 28px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group.full { grid-column: span 2; }
+        .form-group label { display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.4px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 16px; border: 2px solid #e8eef7; border-radius: 10px; font-size: 14px; font-family: 'Inter', sans-serif; transition: all 0.3s; background: #fff; }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 4px rgba(102,126,234,0.15); }
+        .btn-submit { padding: 14px 32px; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; width: 100%; transition: all 0.3s; box-shadow: 0 4px 15px rgba(102,126,234,0.3); }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(102,126,234,0.4); }
+
+        .toast { position: fixed; top: 24px; right: 24px; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; padding: 16px 24px; border-radius: 12px; display: none; z-index: 999; box-shadow: 0 10px 40px rgba(102,126,234,0.4); font-size: 14px; font-weight: 600; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* Footer */
+        .footer { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; margin-top: auto; padding: 60px 40px 30px; }
+        .footer-grid { max-width: 1500px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .footer-brand .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .footer-brand .footer-logo h2 { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #667eea, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.7; max-width: 300px; }
+        .footer-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(167,139,250,0.2)); border: 1px solid rgba(102,126,234,0.3); padding: 8px 16px; border-radius: 24px; font-size: 12px; font-weight: 600; color: #a78bfa; }
+        .footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.4); margin-bottom: 20px; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .footer-col ul li { font-size: 13px; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 8px; transition: color 0.2s; cursor: default; }
+        .footer-col ul li:hover { color: #a78bfa; }
+        .footer-col ul li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #a78bfa); flex-shrink: 0; }
+        .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 14px; }
+        .footer-contact-item svg { flex-shrink: 0; margin-top: 1px; color: #667eea; }
+        .footer-bottom { max-width: 1500px; margin: 0 auto; padding-top: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.35); }
+        .footer-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .footer-tag { font-size: 11px; padding: 4px 10px; border-radius: 6px; background: rgba(102,126,234,0.12); color: rgba(255,255,255,0.45); border: 1px solid rgba(102,126,234,0.15); font-weight: 500; }
+        @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } .footer-brand { grid-column: span 2; } .contact-layout { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } .form-group.full { grid-column: span 1; } .page-hero h2 { font-size: 28px; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <h1>Employee Directory</h1>
+        </div>
+        <div class="env-badge">Landmark Inc.</div>
+    </div>
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="blog.html">Blog</a>
+    </nav>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="page-content">
+        <div class="page-hero">
+            <h2>Get In Touch</h2>
+            <p>Have a question about our programs or services? We'd love to hear from you. Send us a message and we'll respond within 24 hours.</p>
+        </div>
+
+        <div class="contact-layout">
+            <div class="info-cards">
+                <div class="info-card">
+                    <div class="info-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                    <div>
+                        <h4>Email Us</h4>
+                        <p>info@landmarktechnologies.com<br>support@landmarktechnologies.com</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 4.9 2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.1a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17.5z"/></svg></div>
+                    <div>
+                        <h4>Call Us</h4>
+                        <p>+1 (470) 555-0192<br>Mon–Fri, 9am–6pm EST</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+                    <div>
+                        <h4>Location</h4>
+                        <p>Atlanta, GA, USA<br>Remote instruction worldwide</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+                    <div>
+                        <h4>Website</h4>
+                        <p>www.landmarktechnologies.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-card">
+                <h3>Send a Message</h3>
+                <form id="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" placeholder="Jane" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" placeholder="Smith" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" placeholder="jane@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="tel" placeholder="+1 (555) 000-0000">
+                        </div>
+                        <div class="form-group full">
+                            <label>Subject</label>
+                            <select>
+                                <option value="">Select a topic</option>
+                                <option>e-Degree Program Enrollment</option>
+                                <option>Enterprise Training</option>
+                                <option>Cloud Consulting</option>
+                                <option>General Inquiry</option>
+                            </select>
+                        </div>
+                        <div class="form-group full">
+                            <label>Message</label>
+                            <textarea placeholder="Tell us how we can help..."></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <h2>Landmark Technologies</h2>
+                </div>
+                <p>Empowering the next generation of DevOps engineers through hands-on, project-based learning.</p>
+                <div class="footer-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    e-Degree Master Program in DevOps
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul>
+                    <li>Cloud Architecture</li>
+                    <li>DevOps Consulting</li>
+                    <li>CI/CD Implementation</li>
+                    <li>Kubernetes Migration</li>
+                    <li>Infrastructure as Code</li>
+                    <li>Security &amp; Compliance</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Program Modules</h4>
+                <ul>
+                    <li>Linux &amp; Networking</li>
+                    <li>Docker &amp; Containers</li>
+                    <li>Kubernetes &amp; EKS</li>
+                    <li>Helm &amp; GitOps</li>
+                    <li>CI/CD Pipelines</li>
+                    <li>Terraform &amp; IaC</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <div class="footer-contact-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    info@landmarktechnologies.com
+                </div>
+                <div class="footer-contact-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    Atlanta, GA &amp; Remote Worldwide
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Landmark Technologies. All rights reserved.</p>
+            <div class="footer-tags">
+                <span class="footer-tag">AWS EKS</span>
+                <span class="footer-tag">Docker</span>
+                <span class="footer-tag">Kubernetes</span>
+                <span class="footer-tag">Terraform</span>
+                <span class="footer-tag">GitHub Actions</span>
+                <span class="footer-tag">Helm</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const toast = document.getElementById('toast');
+            toast.textContent = '✓ Message sent! We\'ll be in touch within 24 hours.';
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 4000);
+            this.reset();
+        });
+    </script>
+</body>
+</html>

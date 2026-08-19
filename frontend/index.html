@@ -334,6 +334,31 @@
             .employees-grid { grid-template-columns: 1fr; }
         }
 
+        /* ── Navbar ── */
+        .navbar {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 40px;
+        }
+        .navbar a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            padding: 14px 20px;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+        .navbar a:hover, .navbar a.active {
+            color: #fff;
+            border-bottom-color: #a78bfa;
+        }
+
         /* ── Footer ── */
         .footer {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
@@ -477,6 +502,13 @@
         </div>
         <div class="env-badge">Landmark Inc.</div>
     </div>
+    <nav class="navbar">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="blog.html">Blog</a>
+    </nav>
 
     <div class="toast" id="toast"></div>
 

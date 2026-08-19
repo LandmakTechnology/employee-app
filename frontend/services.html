@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | Landmark Technologies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; padding: 24px 40px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 40px rgba(102,126,234,0.3); }
+        .header .logo { display: flex; align-items: center; gap: 14px; }
+        .header .logo svg { width: 36px; height: 36px; }
+        .header .logo h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+        .header .env-badge { background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 24px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+
+        .navbar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; justify-content: center; gap: 8px; padding: 0 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .navbar a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.4px; padding: 14px 20px; transition: all 0.2s; border-bottom: 2px solid transparent; }
+        .navbar a:hover, .navbar a.active { color: #fff; border-bottom-color: #a78bfa; }
+
+        .page-content { flex: 1; max-width: 1100px; margin: 60px auto; padding: 0 30px; width: 100%; }
+
+        .page-hero { text-align: center; margin-bottom: 60px; }
+        .page-hero h2 { font-size: 42px; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px; }
+        .page-hero p { font-size: 18px; color: #555; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px; margin-bottom: 60px; }
+        .service-card { background: #fff; border-radius: 16px; padding: 36px 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid rgba(102,126,234,0.1); position: relative; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+        .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #667eea, #764ba2); }
+        .service-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(102,126,234,0.2); }
+        .service-icon { width: 56px; height: 56px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(102,126,234,0.3); }
+        .service-icon svg { color: #fff; }
+        .service-card h3 { font-size: 19px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+        .service-card p { font-size: 14px; color: #666; line-height: 1.7; margin-bottom: 20px; }
+        .service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .service-tag { font-size: 11px; padding: 4px 10px; border-radius: 6px; background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1)); color: #667eea; border: 1px solid rgba(102,126,234,0.2); font-weight: 600; }
+
+        .pricing-section { margin-bottom: 60px; }
+        .pricing-section h3 { font-size: 28px; font-weight: 800; color: #1a1a2e; text-align: center; margin-bottom: 40px; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .pricing-card { background: #fff; border-radius: 16px; padding: 36px 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid rgba(102,126,234,0.1); text-align: center; transition: transform 0.3s; }
+        .pricing-card.featured { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; transform: scale(1.04); box-shadow: 0 12px 40px rgba(102,126,234,0.35); }
+        .pricing-card:hover { transform: translateY(-4px); }
+        .pricing-card.featured:hover { transform: scale(1.04) translateY(-4px); }
+        .pricing-card .plan { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #667eea; margin-bottom: 12px; }
+        .pricing-card.featured .plan { color: rgba(255,255,255,0.8); }
+        .pricing-card .price { font-size: 40px; font-weight: 800; color: #1a1a2e; margin-bottom: 4px; }
+        .pricing-card.featured .price { color: #fff; }
+        .pricing-card .period { font-size: 13px; color: #888; margin-bottom: 28px; }
+        .pricing-card.featured .period { color: rgba(255,255,255,0.7); }
+        .pricing-card ul { list-style: none; text-align: left; margin-bottom: 28px; display: flex; flex-direction: column; gap: 12px; }
+        .pricing-card ul li { font-size: 13px; color: #555; display: flex; align-items: center; gap: 10px; }
+        .pricing-card.featured ul li { color: rgba(255,255,255,0.9); }
+        .pricing-card ul li::before { content: '✓'; color: #667eea; font-weight: 700; flex-shrink: 0; }
+        .pricing-card.featured ul li::before { color: #a78bfa; }
+        .btn-plan { display: block; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: 600; text-align: center; text-decoration: none; transition: all 0.2s; border: 2px solid #667eea; color: #667eea; background: transparent; cursor: pointer; font-family: 'Inter', sans-serif; width: 100%; }
+        .btn-plan:hover { background: #667eea; color: #fff; }
+        .pricing-card.featured .btn-plan { border-color: #fff; color: #667eea; background: #fff; }
+        .pricing-card.featured .btn-plan:hover { background: rgba(255,255,255,0.9); }
+
+        /* Footer */
+        .footer { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; margin-top: auto; padding: 60px 40px 30px; }
+        .footer-grid { max-width: 1500px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .footer-brand .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .footer-brand .footer-logo h2 { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #667eea, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.7; max-width: 300px; }
+        .footer-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(167,139,250,0.2)); border: 1px solid rgba(102,126,234,0.3); padding: 8px 16px; border-radius: 24px; font-size: 12px; font-weight: 600; color: #a78bfa; }
+        .footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.4); margin-bottom: 20px; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .footer-col ul li { font-size: 13px; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 8px; transition: color 0.2s; cursor: default; }
+        .footer-col ul li:hover { color: #a78bfa; }
+        .footer-col ul li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #a78bfa); flex-shrink: 0; }
+        .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 14px; }
+        .footer-contact-item svg { flex-shrink: 0; margin-top: 1px; color: #667eea; }
+        .footer-bottom { max-width: 1500px; margin: 0 auto; padding-top: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.35); }
+        .footer-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .footer-tag { font-size: 11px; padding: 4px 10px; border-radius: 6px; background: rgba(102,126,234,0.12); color: rgba(255,255,255,0.45); border: 1px solid rgba(102,126,234,0.15); font-weight: 500; }
+        @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } .footer-brand { grid-column: span 2; } .services-grid { grid-template-columns: 1fr; } .pricing-grid { grid-template-columns: 1fr; } .pricing-card.featured { transform: none; } .page-hero h2 { font-size: 28px; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <h1>Employee Directory</h1>
+        </div>
+        <div class="env-badge">Landmark Inc.</div>
+    </div>
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html" class="active">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="blog.html">Blog</a>
+    </nav>
+
+    <div class="page-content">
+        <div class="page-hero">
+            <h2>What We Offer</h2>
+            <p>From cloud architecture consulting to end-to-end DevOps training — we help teams and individuals build and ship software faster.</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                <h3>DevOps Training</h3>
+                <p>Our flagship e-Degree Master Program takes you from zero to production-ready DevOps engineer. 12 modules, real projects, real AWS infrastructure.</p>
+                <div class="service-tags"><span class="service-tag">Docker</span><span class="service-tag">Kubernetes</span><span class="service-tag">CI/CD</span><span class="service-tag">Terraform</span></div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+                <h3>Cloud Architecture</h3>
+                <p>We design and review AWS architectures for startups and enterprises — VPC design, EKS clusters, RDS, S3, IAM, and cost optimization strategies.</p>
+                <div class="service-tags"><span class="service-tag">AWS</span><span class="service-tag">EKS</span><span class="service-tag">VPC</span><span class="service-tag">RDS</span></div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
+                <h3>CI/CD Implementation</h3>
+                <p>We build automated pipelines using GitHub Actions, Jenkins, and CircleCI — from code commit to production deployment with zero downtime.</p>
+                <div class="service-tags"><span class="service-tag">GitHub Actions</span><span class="service-tag">Jenkins</span><span class="service-tag">CircleCI</span></div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                <h3>Security &amp; Compliance</h3>
+                <p>IAM hardening, Secrets Manager integration, network policies, RBAC, and compliance reviews for SOC 2 and ISO 27001 readiness.</p>
+                <div class="service-tags"><span class="service-tag">IAM</span><span class="service-tag">RBAC</span><span class="service-tag">Secrets Manager</span></div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+                <h3>Kubernetes Migration</h3>
+                <p>We migrate your workloads from VMs or bare Docker to Kubernetes — Helm charts, Ingress, HPA, PVCs, and full observability with Prometheus and Grafana.</p>
+                <div class="service-tags"><span class="service-tag">Helm</span><span class="service-tag">ArgoCD</span><span class="service-tag">Prometheus</span></div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+                <h3>Infrastructure as Code</h3>
+                <p>Full Terraform modules for VPC, EKS, RDS, ECR, and Secrets Manager. Reusable, versioned, and environment-aware with tfvars per environment.</p>
+                <div class="service-tags"><span class="service-tag">Terraform</span><span class="service-tag">AWS</span><span class="service-tag">GitOps</span></div>
+            </div>
+        </div>
+
+        <div class="pricing-section">
+            <h3>Training Plans</h3>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="plan">Starter</div>
+                    <div class="price">$299</div>
+                    <div class="period">one-time payment</div>
+                    <ul>
+                        <li>4 core modules</li>
+                        <li>Linux, Git, Docker, CI/CD</li>
+                        <li>Community Discord access</li>
+                        <li>Project source code</li>
+                    </ul>
+                    <button class="btn-plan">Get Started</button>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="plan">e-Degree Master</div>
+                    <div class="price">$999</div>
+                    <div class="period">full program</div>
+                    <ul>
+                        <li>All 12 modules</li>
+                        <li>Live instructor sessions</li>
+                        <li>Real AWS environment</li>
+                        <li>Certificate of completion</li>
+                        <li>Job placement support</li>
+                        <li>Lifetime access</li>
+                    </ul>
+                    <button class="btn-plan">Enroll Now</button>
+                </div>
+                <div class="pricing-card">
+                    <div class="plan">Enterprise</div>
+                    <div class="price">Custom</div>
+                    <div class="period">team pricing</div>
+                    <ul>
+                        <li>Custom curriculum</li>
+                        <li>Private cohort</li>
+                        <li>Dedicated instructor</li>
+                        <li>On-site or remote</li>
+                    </ul>
+                    <button class="btn-plan">Contact Us</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <h2>Landmark Technologies</h2>
+                </div>
+                <p>Empowering the next generation of DevOps engineers through hands-on, project-based learning.</p>
+                <div class="footer-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    e-Degree Master Program in DevOps
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul>
+                    <li>Cloud Architecture</li>
+                    <li>DevOps Consulting</li>
+                    <li>CI/CD Implementation</li>
+                    <li>Kubernetes Migration</li>
+                    <li>Infrastructure as Code</li>
+                    <li>Security &amp; Compliance</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Program Modules</h4>
+                <ul>
+                    <li>Linux &amp; Networking</li>
+                    <li>Docker &amp; Containers</li>
+                    <li>Kubernetes &amp; EKS</li>
+                    <li>Helm &amp; GitOps</li>
+                    <li>CI/CD Pipelines</li>
+                    <li>Terraform &amp; IaC</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <div class="footer-contact-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    info@landmarktechnologies.com
+                </div>
+                <div class="footer-contact-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    Atlanta, GA &amp; Remote Worldwide
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Landmark Technologies. All rights reserved.</p>
+            <div class="footer-tags">
+                <span class="footer-tag">AWS EKS</span>
+                <span class="footer-tag">Docker</span>
+                <span class="footer-tag">Kubernetes</span>
+                <span class="footer-tag">Terraform</span>
+                <span class="footer-tag">GitHub Actions</span>
+                <span class="footer-tag">Helm</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

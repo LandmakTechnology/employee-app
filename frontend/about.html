@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Landmark Technologies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; padding: 24px 40px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 40px rgba(102,126,234,0.3); }
+        .header .logo { display: flex; align-items: center; gap: 14px; }
+        .header .logo svg { width: 36px; height: 36px; }
+        .header .logo h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+        .header .env-badge { background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 24px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+
+        .navbar { background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.1); background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; justify-content: center; gap: 8px; padding: 0 40px; }
+        .navbar a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.4px; padding: 14px 20px; transition: all 0.2s; border-bottom: 2px solid transparent; }
+        .navbar a:hover, .navbar a.active { color: #fff; border-bottom-color: #a78bfa; }
+
+        .page-content { flex: 1; max-width: 1100px; margin: 60px auto; padding: 0 30px; width: 100%; }
+
+        .page-hero { text-align: center; margin-bottom: 60px; }
+        .page-hero h2 { font-size: 42px; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px; }
+        .page-hero p { font-size: 18px; color: #555; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; margin-bottom: 60px; }
+        .card { background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid rgba(102,126,234,0.1); position: relative; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #667eea, #764ba2); }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(102,126,234,0.2); }
+        .card-icon { width: 52px; height: 52px; background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1)); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+        .card-icon svg { color: #667eea; }
+        .card h3 { font-size: 18px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+        .card p { font-size: 14px; color: #666; line-height: 1.7; }
+
+        .mission-section { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; padding: 60px; color: #fff; text-align: center; margin-bottom: 60px; }
+        .mission-section h3 { font-size: 28px; font-weight: 800; margin-bottom: 16px; }
+        .mission-section p { font-size: 16px; opacity: 0.9; max-width: 700px; margin: 0 auto; line-height: 1.8; }
+
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; }
+        .team-card { background: #fff; border-radius: 16px; padding: 28px 20px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid rgba(102,126,234,0.1); transition: transform 0.3s; }
+        .team-card:hover { transform: translateY(-4px); }
+        .team-avatar { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 700; margin: 0 auto 16px; }
+        .team-card h4 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 6px; }
+        .team-card span { font-size: 12px; color: #667eea; font-weight: 600; }
+
+        /* Footer */
+        .footer { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; margin-top: auto; padding: 60px 40px 30px; }
+        .footer-grid { max-width: 1500px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .footer-brand .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .footer-brand .footer-logo h2 { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #667eea, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.7; max-width: 300px; }
+        .footer-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(167,139,250,0.2)); border: 1px solid rgba(102,126,234,0.3); padding: 8px 16px; border-radius: 24px; font-size: 12px; font-weight: 600; color: #a78bfa; letter-spacing: 0.4px; }
+        .footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.4); margin-bottom: 20px; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .footer-col ul li { font-size: 13px; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 8px; transition: color 0.2s; cursor: default; }
+        .footer-col ul li:hover { color: #a78bfa; }
+        .footer-col ul li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #a78bfa); flex-shrink: 0; }
+        .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 14px; }
+        .footer-contact-item svg { flex-shrink: 0; margin-top: 1px; color: #667eea; }
+        .footer-bottom { max-width: 1500px; margin: 0 auto; padding-top: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.35); }
+        .footer-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .footer-tag { font-size: 11px; padding: 4px 10px; border-radius: 6px; background: rgba(102,126,234,0.12); color: rgba(255,255,255,0.45); border: 1px solid rgba(102,126,234,0.15); font-weight: 500; }
+        @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } .footer-brand { grid-column: span 2; } .cards-grid { grid-template-columns: 1fr; } .page-hero h2 { font-size: 28px; } .mission-section { padding: 40px 24px; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <h1>Employee Directory</h1>
+        </div>
+        <div class="env-badge">Landmark Inc.</div>
+    </div>
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="blog.html">Blog</a>
+    </nav>
+
+    <div class="page-content">
+        <div class="page-hero">
+            <h2>About Landmark Technologies</h2>
+            <p>We are a DevOps training company on a mission to produce world-class cloud engineers through real-world, project-based learning.</p>
+        </div>
+
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+                <h3>Our Story</h3>
+                <p>Founded in Atlanta, GA, Landmark Technologies was born from a simple belief: the best way to learn cloud engineering is to build real systems. Our e-Degree Master Program has trained hundreds of engineers who now work at top tech companies worldwide.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+                <h3>Our Approach</h3>
+                <p>Every module in our curriculum is built around a real application — this Employee Directory app. Students deploy it on EC2, containerize it with Docker, orchestrate it on EKS, and automate it with CI/CD pipelines.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                <h3>Our Community</h3>
+                <p>Join a global community of DevOps engineers, cloud architects, and SREs. Our alumni network spans 30+ countries and includes engineers at AWS, Google, Microsoft, and hundreds of startups.</p>
+            </div>
+        </div>
+
+        <div class="mission-section">
+            <h3>Our Mission</h3>
+            <p>To bridge the gap between theoretical knowledge and real-world cloud engineering by delivering hands-on, project-based training that prepares engineers for the demands of modern software infrastructure.</p>
+        </div>
+
+        <div class="cards-grid" style="margin-bottom: 0;">
+            <div class="card">
+                <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+                <h3>500+ Graduates</h3>
+                <p>Engineers trained and placed in cloud and DevOps roles across the globe since our founding.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+                <h3>12 Modules</h3>
+                <p>From Linux fundamentals to Terraform and GitOps — a complete end-to-end DevOps curriculum.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+                <h3>30+ Countries</h3>
+                <p>A truly global alumni network with engineers working remotely and on-site across every continent.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <h2>Landmark Technologies</h2>
+                </div>
+                <p>Empowering the next generation of DevOps engineers through hands-on, project-based learning.</p>
+                <div class="footer-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    e-Degree Master Program in DevOps
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul>
+                    <li>Cloud Architecture</li>
+                    <li>DevOps Consulting</li>
+                    <li>CI/CD Implementation</li>
+                    <li>Kubernetes Migration</li>
+                    <li>Infrastructure as Code</li>
+                    <li>Security &amp; Compliance</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Program Modules</h4>
+                <ul>
+                    <li>Linux &amp; Networking</li>
+                    <li>Docker &amp; Containers</li>
+                    <li>Kubernetes &amp; EKS</li>
+                    <li>Helm &amp; GitOps</li>
+                    <li>CI/CD Pipelines</li>
+                    <li>Terraform &amp; IaC</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <div class="footer-contact-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    info@landmarktechnologies.com
+                </div>
+                <div class="footer-contact-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    Atlanta, GA &amp; Remote Worldwide
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Landmark Technologies. All rights reserved.</p>
+            <div class="footer-tags">
+                <span class="footer-tag">AWS EKS</span>
+                <span class="footer-tag">Docker</span>
+                <span class="footer-tag">Kubernetes</span>
+                <span class="footer-tag">Terraform</span>
+                <span class="footer-tag">GitHub Actions</span>
+                <span class="footer-tag">Helm</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

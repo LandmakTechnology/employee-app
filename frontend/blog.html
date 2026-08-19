@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Landmark Technologies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; display: flex; flex-direction: column; }
+
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; padding: 24px 40px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 40px rgba(102,126,234,0.3); }
+        .header .logo { display: flex; align-items: center; gap: 14px; }
+        .header .logo svg { width: 36px; height: 36px; }
+        .header .logo h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+        .header .env-badge { background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 24px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+
+        .navbar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; justify-content: center; gap: 8px; padding: 0 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .navbar a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.4px; padding: 14px 20px; transition: all 0.2s; border-bottom: 2px solid transparent; }
+        .navbar a:hover, .navbar a.active { color: #fff; border-bottom-color: #a78bfa; }
+
+        .page-content { flex: 1; max-width: 1100px; margin: 60px auto; padding: 0 30px; width: 100%; }
+
+        .page-hero { text-align: center; margin-bottom: 60px; }
+        .page-hero h2 { font-size: 42px; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px; }
+        .page-hero p { font-size: 18px; color: #555; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+        .featured-post { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; padding: 52px; color: #fff; margin-bottom: 48px; position: relative; overflow: hidden; }
+        .featured-post::after { content: 'FEATURED'; position: absolute; top: 24px; right: 24px; background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; border: 1px solid rgba(255,255,255,0.2); }
+        .post-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+        .post-category { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; }
+        .post-date { font-size: 13px; opacity: 0.75; }
+        .featured-post h3 { font-size: 28px; font-weight: 800; margin-bottom: 16px; line-height: 1.3; }
+        .featured-post p { font-size: 15px; opacity: 0.9; line-height: 1.8; max-width: 700px; margin-bottom: 28px; }
+        .btn-read { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: #fff; color: #667eea; border-radius: 10px; font-size: 14px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+        .btn-read:hover { background: rgba(255,255,255,0.9); transform: translateX(4px); }
+
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px; margin-bottom: 60px; }
+        .blog-card { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid rgba(102,126,234,0.1); transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; }
+        .blog-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(102,126,234,0.2); }
+        .blog-card-banner { height: 8px; background: linear-gradient(90deg, #667eea, #764ba2); }
+        .blog-card-body { padding: 28px; flex: 1; display: flex; flex-direction: column; }
+        .blog-card .post-meta { margin-bottom: 14px; }
+        .blog-card .post-category { background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1)); color: #667eea; border: 1px solid rgba(102,126,234,0.2); }
+        .blog-card .post-date { font-size: 12px; color: #999; }
+        .blog-card h3 { font-size: 17px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; line-height: 1.4; }
+        .blog-card p { font-size: 13px; color: #666; line-height: 1.7; flex: 1; margin-bottom: 20px; }
+        .blog-card-footer { display: flex; align-items: center; justify-content: space-between; }
+        .author { display: flex; align-items: center; gap: 10px; }
+        .author-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; }
+        .author-name { font-size: 12px; font-weight: 600; color: #555; }
+        .read-link { font-size: 12px; font-weight: 700; color: #667eea; text-decoration: none; display: flex; align-items: center; gap: 4px; transition: gap 0.2s; }
+        .read-link:hover { gap: 8px; }
+
+        /* Footer */
+        .footer { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; margin-top: auto; padding: 60px 40px 30px; }
+        .footer-grid { max-width: 1500px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .footer-brand .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .footer-brand .footer-logo h2 { font-size: 20px; font-weight: 800; background: linear-gradient(135deg, #667eea, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.7; max-width: 300px; }
+        .footer-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(167,139,250,0.2)); border: 1px solid rgba(102,126,234,0.3); padding: 8px 16px; border-radius: 24px; font-size: 12px; font-weight: 600; color: #a78bfa; }
+        .footer-col h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.4); margin-bottom: 20px; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .footer-col ul li { font-size: 13px; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 8px; transition: color 0.2s; cursor: default; }
+        .footer-col ul li:hover { color: #a78bfa; }
+        .footer-col ul li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #a78bfa); flex-shrink: 0; }
+        .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 14px; }
+        .footer-contact-item svg { flex-shrink: 0; margin-top: 1px; color: #667eea; }
+        .footer-bottom { max-width: 1500px; margin: 0 auto; padding-top: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.35); }
+        .footer-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .footer-tag { font-size: 11px; padding: 4px 10px; border-radius: 6px; background: rgba(102,126,234,0.12); color: rgba(255,255,255,0.45); border: 1px solid rgba(102,126,234,0.15); font-weight: 500; }
+        @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } .footer-brand { grid-column: span 2; } .blog-grid { grid-template-columns: 1fr; } .featured-post { padding: 32px 24px; } .featured-post h3 { font-size: 22px; } .page-hero h2 { font-size: 28px; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <h1>Employee Directory</h1>
+        </div>
+        <div class="env-badge">Landmark Inc.</div>
+    </div>
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="blog.html" class="active">Blog</a>
+    </nav>
+
+    <div class="page-content">
+        <div class="page-hero">
+            <h2>The Landmark Blog</h2>
+            <p>Tutorials, deep dives, and real-world lessons from our instructors and alumni on DevOps, cloud, and modern software engineering.</p>
+        </div>
+
+        <div class="featured-post">
+            <div class="post-meta">
+                <span class="post-category">Kubernetes</span>
+                <span class="post-date">July 15, 2025</span>
+            </div>
+            <h3>Deploying the Employee App on EKS: A Complete Walkthrough</h3>
+            <p>From a raw Terraform apply to a live application behind an ALB Ingress — we walk through every manifest, every Helm value, and every kubectl command needed to run this app in production on Amazon EKS.</p>
+            <a href="#" class="btn-read">Read Article →</a>
+        </div>
+
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="blog-card-banner"></div>
+                <div class="blog-card-body">
+                    <div class="post-meta">
+                        <span class="post-category">CI/CD</span>
+                        <span class="post-date">July 8, 2025</span>
+                    </div>
+                    <h3>GitHub Actions vs CircleCI vs Jenkins: Which Should You Use?</h3>
+                    <p>We built the same pipeline in all three tools and compared setup time, cost, flexibility, and developer experience. Here's what we found.</p>
+                    <div class="blog-card-footer">
+                        <div class="author"><div class="author-avatar">LT</div><span class="author-name">Landmark Team</span></div>
+                        <a href="#" class="read-link">Read →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-card-banner"></div>
+                <div class="blog-card-body">
+                    <div class="post-meta">
+                        <span class="post-category">Docker</span>
+                        <span class="post-date">June 28, 2025</span>
+                    </div>
+                    <h3>Why We Removed the version Field from Docker Compose Files</h3>
+                    <p>Compose V2 made the top-level version field obsolete. Here's what changed, why it causes warnings, and what you should do with your existing files.</p>
+                    <div class="blog-card-footer">
+                        <div class="author"><div class="author-avatar">LT</div><span class="author-name">Landmark Team</span></div>
+                        <a href="#" class="read-link">Read →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-card-banner"></div>
+                <div class="blog-card-body">
+                    <div class="post-meta">
+                        <span class="post-category">Terraform</span>
+                        <span class="post-date">June 20, 2025</span>
+                    </div>
+                    <h3>Terraform Modules for EKS: VPC, Node Groups, and IAM in One Apply</h3>
+                    <p>A breakdown of the Terraform structure we use to provision the full Landmark cluster — including IRSA roles, the ALB controller, and External Secrets Operator.</p>
+                    <div class="blog-card-footer">
+                        <div class="author"><div class="author-avatar">LT</div><span class="author-name">Landmark Team</span></div>
+                        <a href="#" class="read-link">Read →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-card-banner"></div>
+                <div class="blog-card-body">
+                    <div class="post-meta">
+                        <span class="post-category">Helm</span>
+                        <span class="post-date">June 12, 2025</span>
+                    </div>
+                    <h3>Helm vs Raw Manifests: When to Use Each</h3>
+                    <p>Raw YAML is great for learning. Helm is great for production. We explain exactly when to make the switch and how to convert your manifests into a Helm chart.</p>
+                    <div class="blog-card-footer">
+                        <div class="author"><div class="author-avatar">LT</div><span class="author-name">Landmark Team</span></div>
+                        <a href="#" class="read-link">Read →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-card-banner"></div>
+                <div class="blog-card-body">
+                    <div class="post-meta">
+                        <span class="post-category">Monitoring</span>
+                        <span class="post-date">June 5, 2025</span>
+                    </div>
+                    <h3>Setting Up Prometheus and Grafana on EKS in 10 Minutes</h3>
+                    <p>Using the manifests in our kubernetes/monitoring/ directory, we walk through deploying a full observability stack with custom dashboards for the Employee App.</p>
+                    <div class="blog-card-footer">
+                        <div class="author"><div class="author-avatar">LT</div><span class="author-name">Landmark Team</span></div>
+                        <a href="#" class="read-link">Read →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-card-banner"></div>
+                <div class="blog-card-body">
+                    <div class="post-meta">
+                        <span class="post-category">Career</span>
+                        <span class="post-date">May 28, 2025</span>
+                    </div>
+                    <h3>From Zero to DevOps Engineer: A Graduate's Story</h3>
+                    <p>One of our e-Degree graduates shares how they went from no cloud experience to landing a Senior DevOps role at a Series B startup in under 8 months.</p>
+                    <div class="blog-card-footer">
+                        <div class="author"><div class="author-avatar">AL</div><span class="author-name">Alumni Story</span></div>
+                        <a href="#" class="read-link">Read →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <h2>Landmark Technologies</h2>
+                </div>
+                <p>Empowering the next generation of DevOps engineers through hands-on, project-based learning.</p>
+                <div class="footer-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    e-Degree Master Program in DevOps
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <ul>
+                    <li>Cloud Architecture</li>
+                    <li>DevOps Consulting</li>
+                    <li>CI/CD Implementation</li>
+                    <li>Kubernetes Migration</li>
+                    <li>Infrastructure as Code</li>
+                    <li>Security &amp; Compliance</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Program Modules</h4>
+                <ul>
+                    <li>Linux &amp; Networking</li>
+                    <li>Docker &amp; Containers</li>
+                    <li>Kubernetes &amp; EKS</li>
+                    <li>Helm &amp; GitOps</li>
+                    <li>CI/CD Pipelines</li>
+                    <li>Terraform &amp; IaC</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <div class="footer-contact-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    info@landmarktechnologies.com
+                </div>
+                <div class="footer-contact-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    Atlanta, GA &amp; Remote Worldwide
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Landmark Technologies. All rights reserved.</p>
+            <div class="footer-tags">
+                <span class="footer-tag">AWS EKS</span>
+                <span class="footer-tag">Docker</span>
+                <span class="footer-tag">Kubernetes</span>
+                <span class="footer-tag">Terraform</span>
+                <span class="footer-tag">GitHub Actions</span>
+                <span class="footer-tag">Helm</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
