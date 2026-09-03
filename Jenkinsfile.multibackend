@@ -1,0 +1,182 @@
+pipeline {
+    agent any
+
+    environment {
+        PYTHON_IMAGE = 'elvin5711/employee-python'
+        JAVA_IMAGE   = 'elvin5711/employee-java'
+        NODE_IMAGE   = 'elvin5711/employee-node'
+
+        IMAGE_TAG = "build-${BUILD_NUMBER}"
+
+        NODE_TEST_DB = 'employee-node-test-db'
+        NODE_DATABASE_URL = 'postgresql://postgres:postgres@localhost:5432/employees'
+    }
+
+    stages {
+
+        stage('Test All Backends') {
+            steps {
+                echo '=== TESTING PYTHON BACKEND ==='
+                sh '''
+                    pip install -r backend/requirements.txt
+                    cd backend
+                    DATABASE_URL=sqlite:///test.db python3 -m pytest -v
+                '''
+
+                echo '=== TESTING JAVA BACKEND ==='
+                sh '''
+                    cd backend-java
+                    mvn clean test
+                '''
+
+                echo '=== TESTING NODE.JS BACKEND ==='
+                sh '''
+                    docker rm -f $NODE_TEST_DB 2>/dev/null || true
+
+                    docker run -d \
+                      --name $NODE_TEST_DB \
+                      -e POSTGRES_USER=postgres \
+                      -e POSTGRES_PASSWORD=postgres \
+                      -e POSTGRES_DB=employees \
+                      -p 5432:5432 \
+                      postgres:16
+
+                    until docker exec $NODE_TEST_DB pg_isready -U postgres
+                    do
+                        sleep 2
+                    done
+
+                    cd backend-node
+                    npm ci
+                    DATABASE_URL=$NODE_DATABASE_URL npm test
+                '''
+            }
+        }
+
+
+        stage('Build All Backends') {
+            steps {
+                echo '=== BUILDING ALL DOCKER IMAGES ==='
+
+                sh '''
+                    docker build \
+                      -t $PYTHON_IMAGE:$IMAGE_TAG \
+                      backend/
+
+                    docker build \
+                      -t $JAVA_IMAGE:$IMAGE_TAG \
+                      backend-java/
+
+                    docker build \
+                      -t $NODE_IMAGE:$IMAGE_TAG \
+                      backend-node/
+                '''
+            }
+        }
+
+
+        stage('Push All Backends') {
+            steps {
+                echo '=== PUSHING ALL IMAGES TO DOCKER HUB ==='
+
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-credentials',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASS'
+                    )
+                ]) {
+                    sh '''
+                        echo "$DOCKER_PASS" | \
+                        docker login \
+                          -u "$DOCKER_USER" \
+                          --password-stdin
+
+                        docker push $PYTHON_IMAGE:$IMAGE_TAG
+
+                        docker push $JAVA_IMAGE:$IMAGE_TAG
+
+                        docker push $NODE_IMAGE:$IMAGE_TAG
+                    '''
+                }
+            }
+        }
+
+
+        stage('Deploy All Backends') {
+            steps {
+                echo '=== DEPLOYING ALL THREE BACKENDS ==='
+
+                withCredentials([
+                    sshUserPrivateKey(
+                        credentialsId: 'ec2-ssh-key',
+                        keyFileVariable: 'SSH_KEY',
+                        usernameVariable: 'SSH_USER'
+                    ),
+                    string(
+                        credentialsId: 'ec2-host',
+                        variable: 'EC2_HOST'
+                    )
+                ]) {
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no \
+                        -i $SSH_KEY \
+                        $SSH_USER@$EC2_HOST "
+
+                            docker pull $PYTHON_IMAGE:$IMAGE_TAG
+                            docker pull $JAVA_IMAGE:$IMAGE_TAG
+                            docker pull $NODE_IMAGE:$IMAGE_TAG
+
+                            docker network create employee-network \
+                              2>/dev/null || true
+
+                            docker rm -f \
+                              employee-python \
+                              employee-java \
+                              employee-node \
+                              2>/dev/null || true
+
+                            docker run -d \
+                              --name employee-python \
+                              --restart unless-stopped \
+                              --network employee-network \
+                              -p 5000:5000 \
+                              $PYTHON_IMAGE:$IMAGE_TAG
+
+                            docker run -d \
+                              --name employee-java \
+                              --restart unless-stopped \
+                              --network employee-network \
+                              -p 8081:8080 \
+                              $JAVA_IMAGE:$IMAGE_TAG
+
+                            docker run -d \
+                              --name employee-node \
+                              --restart unless-stopped \
+                              --network employee-network \
+                              -p 5001:5000 \
+                              $NODE_IMAGE:$IMAGE_TAG
+                        "
+                    '''
+                }
+            }
+        }
+    }
+
+
+    post {
+        always {
+            sh '''
+                docker rm -f $NODE_TEST_DB 2>/dev/null || true
+            '''
+        }
+
+        success {
+            echo "ALL BACKENDS DEPLOYED SUCCESSFULLY - ${IMAGE_TAG}"
+        }
+
+        failure {
+            echo 'PIPELINE FAILED - CHECK JENKINS CONSOLE OUTPUT'
+        }
+    }
+}
